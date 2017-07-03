@@ -1,0 +1,47 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Marcel Bo <mind@kabelmail.de>
+pkgname=video-mali400
+pkgver=1.0
+pkgrel=1
+pkgdesc="Recent Userspace-Binaries for ARM-development boards like BananaPi - precompiled"
+arch=('any')
+url="https://github.com/ergotamin/video-mali-400"
+license=('unknown')
+groups=()
+depends=()
+makedepends=('tar')
+options=()
+install=
+source=("https://github.com/ergotamin/$pkgname/archive/master.zip")
+md5sums=('8726b94f3913acde7fe18400639ea97d')
+
+prepare() {
+	rm master.zip
+	echo "____________________________________"
+	echo " "
+	if [ -f /dev/mali ] && [ -f /dev/ump ]
+	then
+		echo "   Environment-Test successful !"
+	else
+		echo "$(tput setaf 198) Your Mali-Device is not mounted !"
+		echo "___________________________________"
+		exit 0
+	fi
+	echo " "
+	echo "____________________________________"
+}
+
+build() {
+	echo "$(tput setaf 72) ==> Precompiled !! Nothing to compile !"
+}
+
+package() {
+	cp -ar "$pkgname"-master/* $pkgdir/
+	echo ""
+	echo "$(tput bold)$(tput setaf 42)#### Package creation successful ####"
+	echo ""
+}
